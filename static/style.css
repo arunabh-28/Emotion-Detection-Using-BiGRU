@@ -1,47 +1,922 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+:root {
+    --background: #f7f6f2;
+    --surface: #ffffff;
+    --text: #20201e;
+    --muted: #777671;
+    --border: #deddd7;
+    --accent: #315c4c;
+    --accent-dark: #25493c;
+    --accent-light: #e8efeb;
+    --danger: #b84a4a;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
 body {
-font-family: Arial, sans-serif;
-background: #f4f4f4;
-margin: 0;
-min-height: 100vh;
-display: flex;
-justify-content: center;
-align-items: center;
+    font-family: "DM Sans", sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.6;
 }
 
-.container {
-width: 500px;
-background: white;
-padding: 40px;
-border-radius: 15px;
-text-align: center;
-box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+
+/* ---------------- NAVBAR ---------------- */
+
+.navbar {
+    width: 100%;
+    border-bottom: 1px solid var(--border);
+    background: rgba(247, 246, 242, 0.96);
 }
 
-h1 {
-margin-bottom: 10px;
+
+.nav-container {
+    max-width: 1120px;
+    margin: auto;
+    padding: 20px 24px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    text-decoration: none;
+    color: var(--text);
+
+    font-weight: 700;
+    font-size: 16px;
+}
+
+
+.brand-mark {
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+
+    background: var(--accent);
+    color: white;
+
+    font-family: "Playfair Display", serif;
+    font-size: 18px;
+}
+
+
+.nav-links {
+    display: flex;
+    gap: 28px;
+}
+
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--muted);
+
+    font-size: 14px;
+    font-weight: 500;
+
+    transition: color 0.2s ease;
+}
+
+
+.nav-links a:hover {
+    color: var(--text);
+}
+
+
+/* ---------------- HERO ---------------- */
+
+.hero {
+    max-width: 900px;
+    margin: auto;
+
+    padding: 90px 24px 110px;
+}
+
+
+.hero-content {
+    text-align: center;
+    max-width: 700px;
+    margin: auto;
+}
+
+
+.eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+
+    color: var(--accent);
+
+    margin-bottom: 14px;
+}
+
+
+.hero h1 {
+    font-family: "Playfair Display", serif;
+
+    font-size: clamp(44px, 7vw, 76px);
+    line-height: 1.05;
+
+    letter-spacing: -2px;
+
+    margin-bottom: 24px;
+}
+
+
+.hero h1 span {
+    color: var(--accent);
+}
+
+
+.hero-description {
+    max-width: 560px;
+    margin: auto;
+
+    color: var(--muted);
+
+    font-size: 17px;
+}
+
+
+/* ---------------- ANALYZER CARD ---------------- */
+
+.analyzer-card {
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: 16px;
+
+    padding: 30px;
+
+    margin-top: 55px;
+
+    box-shadow:
+        0 15px 40px rgba(30, 30, 20, 0.06);
+}
+
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    margin-bottom: 22px;
+}
+
+
+.card-top h2 {
+    font-size: 19px;
+    margin-bottom: 4px;
+}
+
+
+.card-top p {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+
+.model-label {
+    padding: 6px 11px;
+
+    border-radius: 20px;
+
+    background: var(--accent-light);
+    color: var(--accent);
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+/* ---------------- TEXTAREA ---------------- */
+
+.input-wrapper {
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.input-wrapper:focus-within {
+    border-color: var(--accent);
+
+    box-shadow:
+        0 0 0 3px rgba(49, 92, 76, 0.08);
+}
+
 
 textarea {
-width: 100%;
-height: 150px;
-margin-top: 20px;
-padding: 12px;
-font-size: 16px;
-resize: none;
-box-sizing: border-box;
+    display: block;
+
+    width: 100%;
+
+    min-height: 190px;
+
+    border: none;
+    outline: none;
+
+    resize: vertical;
+
+    padding: 18px;
+
+    font-family: inherit;
+    font-size: 15px;
+
+    color: var(--text);
+
+    background: white;
 }
 
-button {
-margin-top: 15px;
-padding: 12px 25px;
-font-size: 16px;
-cursor: pointer;
-border: none;
-border-radius: 8px;
+
+textarea::placeholder {
+    color: #aaa9a3;
 }
 
-#result {
-margin-top: 25px;
-font-size: 20px;
-font-weight: bold;
+
+.input-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 9px 14px;
+
+    border-top: 1px solid var(--border);
+
+    background: #fafaf8;
+
+    font-size: 11px;
+
+    color: var(--muted);
+}
+
+
+.clear-button {
+    border: none;
+    background: none;
+
+    color: var(--muted);
+
+    cursor: pointer;
+
+    font-family: inherit;
+    font-size: 11px;
+}
+
+
+.clear-button:hover {
+    color: var(--text);
+}
+
+
+/* ---------------- EXAMPLES ---------------- */
+
+.examples {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin: 17px 0 20px;
+
+    flex-wrap: wrap;
+
+    font-size: 12px;
+    color: var(--muted);
+}
+
+
+.example-button {
+    border: 1px solid var(--border);
+
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 6px 11px;
+
+    font-family: inherit;
+    font-size: 11px;
+
+    cursor: pointer;
+
+    color: var(--text);
+
+    transition: all 0.2s ease;
+}
+
+
+.example-button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+
+/* ---------------- ANALYZE BUTTON ---------------- */
+
+.analyze-button {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    border: none;
+    border-radius: 9px;
+
+    padding: 14px 18px;
+
+    background: var(--accent);
+    color: white;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.analyze-button:hover {
+    background: var(--accent-dark);
+
+    transform: translateY(-1px);
+}
+
+
+.analyze-button:disabled {
+    cursor: wait;
+    opacity: 0.7;
+    transform: none;
+}
+
+
+.arrow {
+    font-size: 18px;
+}
+
+
+.loader {
+    display: none;
+
+    width: 15px;
+    height: 15px;
+
+    border: 2px solid rgba(255,255,255,0.35);
+    border-top-color: white;
+
+    border-radius: 50%;
+
+    animation: spin 0.7s linear infinite;
+}
+
+
+.loading .loader {
+    display: block;
+}
+
+
+.loading .arrow {
+    display: none;
+}
+
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+.error-message {
+    display: none;
+
+    margin-top: 13px;
+
+    color: var(--danger);
+
+    text-align: center;
+
+    font-size: 13px;
+}
+
+
+/* ---------------- RESULTS ---------------- */
+
+.result-section {
+    margin-top: 60px;
+
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: 16px;
+
+    overflow: hidden;
+}
+
+
+.hidden {
+    display: none;
+}
+
+
+.result-header {
+    padding: 28px 30px;
+
+    border-bottom: 1px solid var(--border);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.result-header h2 {
+    font-family: "Playfair Display", serif;
+
+    font-size: 27px;
+}
+
+
+.new-analysis {
+    border: 1px solid var(--border);
+
+    background: white;
+
+    padding: 8px 13px;
+
+    border-radius: 7px;
+
+    font-family: inherit;
+    font-size: 12px;
+
+    cursor: pointer;
+}
+
+
+.new-analysis:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+
+.result-main {
+    padding: 30px;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 40px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+
+.emotion-result {
+    display: flex;
+    align-items: center;
+
+    gap: 17px;
+}
+
+
+.emotion-icon {
+    width: 65px;
+    height: 65px;
+
+    border-radius: 50%;
+
+    background: var(--accent-light);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 31px;
+}
+
+
+.result-label {
+    color: var(--muted);
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 4px;
+}
+
+
+.emotion-result h3 {
+    font-family: "Playfair Display", serif;
+
+    font-size: 29px;
+
+    text-transform: capitalize;
+}
+
+
+.confidence {
+    align-self: center;
+}
+
+
+.confidence-heading {
+    display: flex;
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+
+    font-size: 13px;
+}
+
+
+.confidence-heading strong {
+    color: var(--accent);
+}
+
+
+.progress-track,
+.small-progress {
+    height: 8px;
+
+    background: #ecece7;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+
+.progress-bar,
+.small-progress div {
+    height: 100%;
+
+    width: 0;
+
+    background: var(--accent);
+
+    border-radius: inherit;
+
+    transition: width 0.7s ease;
+}
+
+
+/* ---------------- ANALYZED TEXT ---------------- */
+
+.analyzed-text {
+    padding: 28px 30px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+
+.analyzed-text blockquote {
+    margin-top: 8px;
+
+    padding-left: 15px;
+
+    border-left: 3px solid var(--accent);
+
+    color: #4f4f4a;
+
+    font-size: 15px;
+
+    font-style: italic;
+}
+
+
+/* ---------------- PROBABILITIES ---------------- */
+
+.probabilities {
+    padding: 30px;
+}
+
+
+.section-heading h3 {
+    font-size: 18px;
+
+    margin-bottom: 22px;
+}
+
+
+.emotion-list {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 20px 35px;
+}
+
+
+.emotion-row-info {
+    display: flex;
+    justify-content: space-between;
+
+    font-size: 13px;
+
+    margin-bottom: 7px;
+}
+
+
+.emotion-row-info strong {
+    color: var(--muted);
+    font-weight: 500;
+}
+
+
+.small-progress {
+    height: 5px;
+}
+
+
+.small-progress div {
+    background: #6b756e;
+}
+
+
+/* ---------------- HOW IT WORKS ---------------- */
+
+.how-section {
+    max-width: 1120px;
+
+    margin: auto;
+
+    padding: 100px 24px;
+}
+
+
+.section-intro {
+    max-width: 650px;
+}
+
+
+.section-intro h2 {
+    font-family: "Playfair Display", serif;
+
+    font-size: clamp(32px, 5vw, 50px);
+
+    line-height: 1.1;
+
+    margin-bottom: 20px;
+}
+
+
+.section-intro > p:last-child {
+    color: var(--muted);
+
+    max-width: 570px;
+}
+
+
+.steps {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 0;
+
+    margin-top: 60px;
+
+    border-top: 1px solid var(--border);
+}
+
+
+.step {
+    padding: 30px;
+
+    border-right: 1px solid var(--border);
+}
+
+
+.step:first-child {
+    padding-left: 0;
+}
+
+
+.step:last-child {
+    border-right: none;
+}
+
+
+.step span {
+    display: block;
+
+    color: var(--accent);
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    margin-bottom: 25px;
+}
+
+
+.step h3 {
+    font-size: 19px;
+
+    margin-bottom: 8px;
+}
+
+
+.step p {
+    color: var(--muted);
+
+    font-size: 13px;
+
+    max-width: 250px;
+}
+
+
+/* ---------------- FOOTER ---------------- */
+
+footer {
+    border-top: 1px solid var(--border);
+}
+
+
+.footer-container {
+    max-width: 1120px;
+
+    margin: auto;
+
+    padding: 25px 24px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+
+.footer-links {
+    display: flex;
+    gap: 10px;
+}
+
+
+.footer-links a {
+    color: var(--muted);
+
+    text-decoration: none;
+}
+
+
+.footer-links a:hover {
+    color: var(--text);
+}
+
+
+/* ---------------- RESPONSIVE ---------------- */
+
+@media (max-width: 700px) {
+
+    .nav-container {
+        padding: 17px 18px;
+    }
+
+
+    .nav-links {
+        display: none;
+    }
+
+
+    .hero {
+        padding: 60px 17px 80px;
+    }
+
+
+    .hero h1 {
+        letter-spacing: -1px;
+    }
+
+
+    .hero-description {
+        font-size: 15px;
+    }
+
+
+    .analyzer-card {
+        padding: 20px;
+
+        margin-top: 38px;
+    }
+
+
+    .card-top {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+
+    .result-header {
+        padding: 22px;
+
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+
+    .result-header h2 {
+        font-size: 23px;
+    }
+
+
+    .new-analysis {
+        white-space: nowrap;
+    }
+
+
+    .result-main {
+        padding: 24px;
+
+        grid-template-columns: 1fr;
+
+        gap: 30px;
+    }
+
+
+    .emotion-list {
+        grid-template-columns: 1fr;
+    }
+
+
+    .probabilities,
+    .analyzed-text {
+        padding: 24px;
+    }
+
+
+    .steps {
+        grid-template-columns: 1fr;
+
+        margin-top: 40px;
+    }
+
+
+    .step,
+    .step:first-child {
+        padding: 25px 0;
+
+        border-right: none;
+
+        border-bottom: 1px solid var(--border);
+    }
+
+
+    .step:last-child {
+        border-bottom: none;
+    }
+
+
+    .footer-container {
+        flex-direction: column;
+
+        gap: 12px;
+
+        text-align: center;
+    }
+
 }

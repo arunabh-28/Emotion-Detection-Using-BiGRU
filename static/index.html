@@ -1,40 +1,355 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    ```
-    <title>Emotion Detection</title>
+    <title>Emotion Detector</title>
+    <meta name="description"
+        content="Analyze the emotion behind your text using a BiGRU-based emotion detection model.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
 
     <link rel="stylesheet" href="/static/style.css">
-    ```
-
 </head>
 
 <body>
 
-    ```
-    <div class="container">
+    <header class="navbar">
+        <div class="nav-container">
 
-        <h1>Emotion Detection</h1>
+            <a href="/" class="brand">
+                <span class="brand-mark">E</span>
+                <span>Emotion Detector</span>
+            </a>
 
-        <p>Enter a sentence and let the BiGRU model detect the emotion.</p>
+            <div class="nav-links">
+                <a href="#how-it-works">How it works</a>
+                <a href="/docs" target="_blank">API</a>
+            </div>
 
-        <textarea id="textInput" placeholder="Example: I am extremely happy today!"></textarea>
+        </div>
+    </header>
 
-        <button onclick="predictEmotion()">
-            Predict Emotion
-        </button>
 
-        <div id="result"></div>
+    <main>
 
-    </div>
+        <!-- HERO -->
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <p class="eyebrow">TEXT EMOTION ANALYSIS</p>
+
+                <h1>
+                    What does your
+                    <span>text</span> feel like?
+                </h1>
+
+                <p class="hero-description">
+                    Write something below and see what emotion the model
+                    detects in your words.
+                </p>
+
+            </div>
+
+
+            <!-- INPUT CARD -->
+            <div class="analyzer-card">
+
+                <div class="card-top">
+                    <div>
+                        <h2>Write something</h2>
+                        <p>Enter a sentence or a short paragraph.</p>
+                    </div>
+
+                    <span class="model-label">
+                        BiGRU
+                    </span>
+                </div>
+
+
+                <div class="input-wrapper">
+
+                    <textarea id="textInput" maxlength="2000"
+                        placeholder="Example: I finally got the job I've been waiting for..."></textarea>
+
+                    <div class="input-bottom">
+
+                        <span id="charCount">0 / 2000</span>
+
+                        <button id="clearButton" class="clear-button" type="button">
+                            Clear
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="examples">
+
+                    <span>Try an example:</span>
+
+                    <button type="button" class="example-button"
+                        data-text="I am so happy that everything finally worked out.">
+                        Happy
+                    </button>
+
+                    <button type="button" class="example-button" data-text="I feel completely alone and miserable.">
+                        Sad
+                    </button>
+
+                    <button type="button" class="example-button" data-text="I am terrified of what might happen next.">
+                        Fear
+                    </button>
+
+                </div>
+
+
+                <button id="analyzeButton" class="analyze-button" type="button">
+
+                    <span id="buttonText">
+                        Analyze emotion
+                    </span>
+
+                    <span id="loader" class="loader"></span>
+
+                    <span class="arrow">→</span>
+
+                </button>
+
+                <p id="errorMessage" class="error-message"></p>
+
+            </div>
+
+
+            <!-- RESULT -->
+            <section id="resultSection" class="result-section hidden">
+
+                <div class="result-header">
+                    <div>
+                        <p class="eyebrow">RESULT</p>
+                        <h2>Here's what I found</h2>
+                    </div>
+
+                    <button id="newAnalysisButton" class="new-analysis">
+                        New analysis
+                    </button>
+                </div>
+
+
+                <div class="result-main">
+
+                    <div class="emotion-result">
+
+                        <div id="emotionIcon" class="emotion-icon">
+                            —
+                        </div>
+
+                        <div>
+                            <p class="result-label">Detected emotion</p>
+                            <h3 id="emotionName">—</h3>
+                        </div>
+
+                    </div>
+
+
+                    <div class="confidence">
+
+                        <div class="confidence-heading">
+                            <span>Confidence</span>
+                            <strong id="confidenceValue">0%</strong>
+                        </div>
+
+                        <div class="progress-track">
+                            <div id="confidenceBar" class="progress-bar"></div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="analyzed-text">
+
+                    <p class="result-label">Your text</p>
+
+                    <blockquote id="analyzedText">
+                        —
+                    </blockquote>
+
+                </div>
+
+
+                <!-- ALL EMOTIONS -->
+                <div class="probabilities">
+
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">BREAKDOWN</p>
+                            <h3>Emotion probabilities</h3>
+                        </div>
+                    </div>
+
+
+                    <div class="emotion-list">
+
+                        <div class="emotion-row">
+                            <div class="emotion-row-info">
+                                <span>Sadness</span>
+                                <strong id="sadnessValue">0%</strong>
+                            </div>
+                            <div class="small-progress">
+                                <div id="sadnessBar"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="emotion-row">
+                            <div class="emotion-row-info">
+                                <span>Joy</span>
+                                <strong id="joyValue">0%</strong>
+                            </div>
+                            <div class="small-progress">
+                                <div id="joyBar"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="emotion-row">
+                            <div class="emotion-row-info">
+                                <span>Love</span>
+                                <strong id="loveValue">0%</strong>
+                            </div>
+                            <div class="small-progress">
+                                <div id="loveBar"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="emotion-row">
+                            <div class="emotion-row-info">
+                                <span>Anger</span>
+                                <strong id="angerValue">0%</strong>
+                            </div>
+                            <div class="small-progress">
+                                <div id="angerBar"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="emotion-row">
+                            <div class="emotion-row-info">
+                                <span>Fear</span>
+                                <strong id="fearValue">0%</strong>
+                            </div>
+                            <div class="small-progress">
+                                <div id="fearBar"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="emotion-row">
+                            <div class="emotion-row-info">
+                                <span>Surprise</span>
+                                <strong id="surpriseValue">0%</strong>
+                            </div>
+                            <div class="small-progress">
+                                <div id="surpriseBar"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </section>
+
+
+        <!-- HOW IT WORKS -->
+        <section id="how-it-works" class="how-section">
+
+            <div class="section-intro">
+
+                <p class="eyebrow">HOW IT WORKS</p>
+
+                <h2>
+                    Simple on the outside.<br>
+                    Deep learning underneath.
+                </h2>
+
+                <p>
+                    The application processes your text and uses a
+                    Bidirectional GRU neural network to identify the
+                    most likely emotion.
+                </p>
+
+            </div>
+
+
+            <div class="steps">
+
+                <div class="step">
+                    <span>01</span>
+                    <h3>Write</h3>
+                    <p>
+                        Enter any sentence or short piece of text.
+                    </p>
+                </div>
+
+                <div class="step">
+                    <span>02</span>
+                    <h3>Analyze</h3>
+                    <p>
+                        Your text is cleaned and converted into a
+                        sequence the model can understand.
+                    </p>
+                </div>
+
+                <div class="step">
+                    <span>03</span>
+                    <h3>Understand</h3>
+                    <p>
+                        The model predicts one of six emotions and
+                        provides confidence scores.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <div class="footer-container">
+
+            <p>
+                Built with FastAPI &amp; BiGRU
+            </p>
+
+            <div class="footer-links">
+                <a href="/docs" target="_blank">API Documentation</a>
+                <span>•</span>
+                <a href="/health" target="_blank">Health</a>
+            </div>
+
+        </div>
+
+    </footer>
+
 
     <script src="/static/script.js"></script>
-    ```
 
 </body>
 
